@@ -102,3 +102,20 @@ function consolelog($status = 200)  {
 } // end-of-check funtion exist
 
 require_once __DIR__.'/models.php';
+// Capsule::enableQuerylog();
+
+// $m = Member::find(7);
+// dump($m->jobs);
+// dump($m->ownder_members);
+// dump($m->owners);
+
+  // $j = Job::find(1);
+  // $j->owner;
+  // $j->owner->paytypes;
+  // $j->owner->appconfig;
+  // dump($j->toJson());
+  // // dump($j);
+
+
+
+// dump(Capsule::getQueryLog());

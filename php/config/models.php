@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 
+
 class Member  extends  Model  { 
 
         protected $table='members';
@@ -23,29 +24,76 @@ class Member  extends  Model  {
         //public static function boot()     {
         //    parent::boot();
         //}
+        //
+        public function jobs(){
+            return $this->hasMany('Job','owner_id');
+        }
+
+        public function currentjob(){
+            return $this->hasOne('Job','owner_id')->where('status',1)->orderBy('job_date','desc');
+        }
+
+        public function paytypes(){
+            return $this->hasMany('Paytype','owner_id');
+        }
+
+        public function ownder_members() {
+            return $this->belongsToMany('member','owner_members','owner_id','member_id');
+        }
+
+        public function  owners() {
+            return $this->belongsToMany('member','owner_members','member_id','owner_id');
+        }
+
+        public function appconfig(){
+            return $this->hasMany('App','owner_id');
+        }
+
+
+ }
+
+ class Ownermember  extends  Model  { 
+
+        protected $table='owner_members';
+        protected  $primaryKey='id';
+        //public $timestamps = true;
+        //protected $guarded = array('id');
+        //protected $fillable = [];
+        //protected $hidden = [];
+        //protected $connection = '';
+        //use SoftDeletingTrait;
+        //protected $dates = ['deleted_at'];
+
+        //protected $casts = [
+        //     ""       => '',
+        //];
+
+        //public static function boot()     {
+        //    parent::boot();
+        //}
 
  }
 
  class App  extends  Model  { 
  
-         protected $table='app';
+         protected $table='apps';
          protected  $primaryKey='id';
          public $timestamps = true;
-         //protected $guarded = array('id');
-         //protected $fillable = [];
-         //protected $hidden = [];
-         //protected $connection = '';
-         //use SoftDeletingTrait;
-         //protected $dates = ['deleted_at'];
+         protected $guarded = array('id');
+         protected $fillable = [];
+         protected $hidden = ['owner_id'];
+         // protected $connection = '';
+         // use SoftDeletingTrait;
+         // protected $dates = ['deleted_at'];
  
-         //protected $casts = [
+         // protected $casts = [
          //     ""       => '',
-         //];
+         // ];
  
-         //public static function boot()     {
+         // public static function boot()     {
          //    parent::boot();
-         //}
- 
+         // }
+
   }
 
 
@@ -68,6 +116,10 @@ class Job  extends  Model  {
         //public static function boot()     {
         //    parent::boot();
         //}
+
+        public function owner() {
+           return $this->hasOne('Member','id','owner_id');
+        }        
 
  }
 
