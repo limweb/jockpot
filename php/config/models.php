@@ -11,8 +11,8 @@ class Member  extends  Model  {
         protected  $primaryKey='id';
         public $timestamps = true;
         protected $guarded = array('id');
-        //protected $fillable = [];
-        //protected $hidden = [];
+        // protected $fillable = [];
+        protected $hidden = ['passwd'];
         //protected $connection = '';
         //use SoftDeletingTrait;
         //protected $dates = ['deleted_at'];
@@ -48,8 +48,6 @@ class Member  extends  Model  {
         public function appconfig(){
             return $this->hasMany('App','owner_id');
         }
-
-
  }
 
  class Ownermember  extends  Model  { 
@@ -120,6 +118,10 @@ class Job  extends  Model  {
         public function owner() {
            return $this->hasOne('Member','id','owner_id');
         }        
+
+        public function notreceive(){
+            return $this->hasMany('Notreceive','job_id','id');
+        }
 
  }
 
